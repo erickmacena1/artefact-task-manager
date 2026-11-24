@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { DeleteTaskButton } from "@/components/delete-task-button";
 import type { Task } from "@/lib/tasks";
 import { getServerCaller } from "@/trpc/server";
 
@@ -24,12 +25,15 @@ function TaskItem({ task }: { task: Task }) {
         <time dateTime={task.createdAt} className="text-xs text-zinc-500">
           Created {createdAtFormat.format(new Date(task.createdAt))}
         </time>
-        <Link
-          href={`/tasks/${task.id}/edit`}
-          className="text-sm font-medium text-zinc-700 hover:underline dark:text-zinc-300"
-        >
-          Edit
-        </Link>
+        <div className="flex items-center gap-3">
+          <Link
+            href={`/tasks/${task.id}/edit`}
+            className="text-sm font-medium text-zinc-700 hover:underline dark:text-zinc-300"
+          >
+            Edit
+          </Link>
+          <DeleteTaskButton id={task.id} title={task.title} />
+        </div>
       </div>
     </li>
   );
