@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Task } from "@/lib/tasks";
 import { getServerCaller } from "@/trpc/server";
 
@@ -19,12 +20,17 @@ function TaskItem({ task }: { task: Task }) {
           {task.description}
         </p>
       ) : null}
-      <time
-        dateTime={task.createdAt}
-        className="mt-3 block text-xs text-zinc-500"
-      >
-        Created {createdAtFormat.format(new Date(task.createdAt))}
-      </time>
+      <div className="mt-3 flex items-center justify-between gap-4">
+        <time dateTime={task.createdAt} className="text-xs text-zinc-500">
+          Created {createdAtFormat.format(new Date(task.createdAt))}
+        </time>
+        <Link
+          href={`/tasks/${task.id}/edit`}
+          className="text-sm font-medium text-zinc-700 hover:underline dark:text-zinc-300"
+        >
+          Edit
+        </Link>
+      </div>
     </li>
   );
 }
@@ -35,13 +41,21 @@ export default async function TasksPage() {
 
   return (
     <main className="mx-auto w-full max-w-2xl px-6 py-12">
-      <header className="mb-8">
-        <h1 className="text-2xl font-semibold tracking-tight">Tasks</h1>
-        <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
-          {tasks.length === 0
-            ? "No tasks yet."
-            : `${tasks.length} ${tasks.length === 1 ? "task" : "tasks"}`}
-        </p>
+      <header className="mb-8 flex items-start justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-semibold tracking-tight">Tasks</h1>
+          <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
+            {tasks.length === 0
+              ? "No tasks yet."
+              : `${tasks.length} ${tasks.length === 1 ? "task" : "tasks"}`}
+          </p>
+        </div>
+        <Link
+          href="/tasks/new"
+          className="shrink-0 rounded-lg bg-zinc-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-zinc-700 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300"
+        >
+          New task
+        </Link>
       </header>
 
       {tasks.length === 0 ? (

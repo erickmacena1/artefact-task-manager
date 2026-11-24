@@ -20,6 +20,10 @@ export const taskStore = {
     );
   },
 
+  get(id: string): Task | undefined {
+    return tasks.get(id);
+  },
+
   create(input: CreateTaskInput): Task {
     const task: Task = {
       id: randomUUID(),

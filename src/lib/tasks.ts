@@ -31,6 +31,6 @@ export const updateTaskInput = createTaskInput.extend({
 
 export type UpdateTaskInput = z.infer<typeof updateTaskInput>;
 
-export const deleteTaskInput = z.object({
+export const taskIdInput = z.object({
   id: z.uuid("Invalid task ID."),
 });
