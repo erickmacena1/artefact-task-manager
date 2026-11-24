@@ -33,12 +33,15 @@ Before handing off code changes, run `npm run lint` and `npm run build`. These a
 
 - `src/app/` — App Router routes, layouts, metadata, and `globals.css`.
 - `src/app/api/trpc/[trpc]/route.ts` — tRPC fetch-adapter endpoint (GET for queries, POST for mutations).
-- `src/trpc/` — tRPC setup: `init.ts` (instance, context, procedure/router helpers) and `routers/` (root router in `_app.ts`).
+- `src/trpc/` — tRPC setup: `init.ts` (instance, context, procedure/router helpers) and `routers/` (root router in `_app.ts`, feature routers such as `tasks.ts`).
+- `src/server/` — server-only domain logic (currently the in-memory task store). Never import it from client components.
+- `src/lib/` — environment-agnostic shared code (task types and Zod schemas), safe to import from both server and client.
 - `src/` outside `app/` — shared application code, imported via the `@/*` alias (maps to `src/*`). Avoid deep relative imports.
 - `.agents/skills/` — vendored agent skills; `.claude/skills/` symlinks into it; `skills-lock.json` pins their source and version.
 
 ## Conventions
 
+- **English only.** Write code, identifiers, comments, UI copy, error messages, and repository documentation in English.
 - **Server-first React.** Components are Server Components by default. Add `"use client"` only when state, effects, event handlers, or browser APIs require it, and keep it as low in the tree as possible. Never import server-only code into a client component.
 - **Next.js 15 async APIs.** `cookies()`, `headers()`, and page `params`/`searchParams` are async; await them.
 - **Zod 4.** Validate data at boundaries (user input, tRPC inputs) with Zod schemas and infer types from them. Most examples online target Zod 3, so check the v4 API.
