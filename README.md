@@ -1,8 +1,8 @@
 # Artefact Task Manager
 
-![Demo](assets/demo.gif)
-
 A task manager built with Next.js, tRPC, TanStack Query, Zod, and an in-memory store.
+
+![Demo](assets/demo.gif)
 
 ## Overview
 
